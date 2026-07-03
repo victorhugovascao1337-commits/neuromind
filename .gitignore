@@ -1,0 +1,28 @@
+# dependências
+node_modules/
+
+# variáveis de ambiente locais (NUNCA subir credenciais)
+.env
+.env.local
+.env*.local
+
+# arquivos do sistema / editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Vercel
+.vercel
+
+# backups locais
+*.backup-*.html
+
+# arquivos-fonte originais (não vão pro deploy)
+\[BUYGOODS\]*
+/logo-black.svg
+/badge-60-day.webp
+
+# scripts de tracking removidos (não referenciados mais)
+NeuroMind Pro_files/track.js.download
+NeuroMind Pro_files/utm-transfer.js.download
+NeuroMind Pro_files/v4513226*

@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8">
+
+  
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#000000">
+  <title>NeuroMind Pro</title>
+
+  <!-- Ícones / Fontes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="./NeuroMind Pro_files/css2" rel="stylesheet">
+
+  <!-- jQuery (usado pelos scripts de delay) -->
+  <script src="./NeuroMind Pro_files/jquery.min.js.download" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script>!function (i, n) { i._plt = i._plt || (n && n.timeOrigin ? n.timeOrigin + n.now() : Date.now()) }(window, performance);</script>
+
+  <!-- ══════════════════════════════════════════════════════════════════════════════
+       NEUROMIND PRO - MODELO PADRÃO
+       Layout: editorial dark (CBS News style)
+       Tema: preto + branco + roxo (acento) + laranja BEST VALUE
+       ══════════════════════════════════════════════════════════════════════════════ -->
+  <style>
+    /* ╔════════════════════════════════════════════════════════════════════════════╗
+       ║                                                                            ║
+       ║   📌 GUIA DE EDIÇÃO RÁPIDA                                                 ║
+       ║                                                                            ║
+       ║   🎨 CORES: Altere as variáveis abaixo (:root)                             ║
+       ║   🖼️  MOCKUPS: Procure por "MOCKUP" no HTML (Ctrl+F)                       ║
+       ║   💰 PREÇOS: Procure por "PREÇO" no HTML (Ctrl+F)                          ║
+       ║   ✏️  TEXTOS: Procure por "TEXTO" no HTML (Ctrl+F)                         ║
+       ║   🛒 CHECKOUT: Procure por "CHECKOUT" no HTML (Ctrl+F)                     ║
+       ║                                                                            ║
+       ╚════════════════════════════════════════════════════════════════════════════╝ */
+
+    /* ══════════════════════════════════════════════════════════════════════════════
+       🎨 PALETA DE CORES - TEMA NEUROMIND PRO DARK
+       ══════════════════════════════════════════════════════════════════════════════ */
+    :root {
+      /* Fundos */
+      --bg-page: #000000;
+      --bg-surface: #111111;
+      --bg-surface-2: #1a1a1a;
+      --bg-card-side: #161616;
+      --bg-card-side-grad: #0e0e0e;
+
+      /* Texto */
+      --text-primary: #ffffff;
+      --text-secondary: #b8b8b8;
+      --text-muted: #7a7a7a;
+      --text-disabled: #4d4d4d;
+
+      /* Bordas / divisores */
+      --border-soft: #232323;
+      --border-strong: #2e2e2e;
+
+      /* Acentos de marca (roxo) */
+      --brand-purple: #7b3aa8;
+      --brand-purple-light: #9d5fc9;
+      --brand-purple-deep: #4f1f72;
+
+      /* Vermelho editorial (LIVE, headline border) */
+      --accent-red: #d9001b;
+      --accent-red-dark: #a30015;
+
+      /* BEST VALUE - Laranja (contraste mantido conforme solicitado) */
+      --best-orange-1: #E6882B;
+      --best-orange-2: #D07520;
+      --best-orange-deep: #B85F15;
+
+      /* Preços */
+      --price-old: #ff5a6a;
+      --price-now-light: #ffde59;
+      --price-now-best: #ffffff;
+
+      /* Checks */
+      --check-purple: var(--brand-purple-light);
+      --check-orange: var(--best-orange-1);
+      --check-white: #ffffff;
+      --check-green: #21c97a;
+    }
+
+    /* ══════════════════════════════════════════════════════════════════════════════
+       ⚙️ RESET & BASE
+       ══════════════════════════════════════════════════════════════════════════════ */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: var(--bg-page); color: var(--text-primary); }
+    body {
+      font-family: 'Sora', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+    .mg-auto { margin-left: auto; margin-right: auto; }
+    .esconder { display: none; }
+
+    /* ══════════════════════════════════════════════════════════════════════════════
+       📰 HEADER - estilo editorial CBS News (preto, minimalista)
+       ══════════════════════════════════════════════════════════════════════════════ */
+    .news-header {
+      background: #000;
+      border-bottom: 1px solid var(--border-soft);
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+    .news-header .icon-btn {
+      width: 26px;
+      height: 26px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 3px;
+      cursor: default;
+    }
+    .news-header .icon-btn span {
+      background: #ffffff;
+      border-radius: 1px;
+    }
+    .news-header .brand {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: 0.5px;
+      color: #fff;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .news-header .brand .brand-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .news-header .brand .brand-dot::before {
+      content: '';
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #000;
+    }
+    .news-header .search-btn {
+      color: #fff;
+      font-size: 18px;
+      cursor: default;
+      opacity: 0.95;
+    }
+
+    /* ══════════════════════════════════════════════════════════════════════════════
+       📄 CONTAINER PRINCIPAL
+       ══════════════════════════════════════════════════════════════════════════════ */
+    #container {
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      background: var(--bg-page);
+      min-height: 100vh;
+    }
+
+    .principal {
+      padding: 28px 22px 36px;
+    }
+
+    /* VTURB / Vídeo */
+    .video_vturb {
+      width: 100%;
+      margin-bottom: 22px;
+      position: relative;
+    }
+
+    /* TEXTO: HEADLINE PRINCIPAL */
+    .headline-block {
+      margin-bottom: 26px;
+    }
+    .headline-block h1 {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 500;
+      font-size: clamp(22px, 5vw, 34px);
+      line-height: 1.22;
+      color: var(--text-primary);
+      letter-spacing: -0.4px;
+      text-align: left;
+      max-width: 38ch;
+      text-wrap: balance;
+    }
+    .headline-block h1 strong {
+      font-weight: 800;
+      color: #ffffff;
+      white-space: nowrap;
+    }
+    .headline-block h1 .h-accent {
+      color: var(--accent-red);
+    }
+    .headline-block .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-red);
+      color: #fff;
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 1.2px;
+      padding: 6px 12px 6px 10px;
+      margin-top: 16px;
+      border-radius: 3px;
+      text-transform: uppercase;
+    }
+    .headline-block .live-badge::before {
+      content: '';
+      width: 8px; height: 8px;
+      background: #fff;
+      border-radius: 50%;
+      animation: pulseDot 1.4s infinite ease-in-out;
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.35; transform: scale(0.8); }
+    }
+
+    /* ══════════════════════════════════════════════════════════════════════════════
+       💊 SEÇÃO DE OFERTAS (3 CARDS)
+       ══════════════════════════════════════════════════════════════════════════════ */
+    .ofertas-section {
+      padding: 40px 18px 24px;
+    }
+    .ofertas-section .scrolldown-title {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      text-align: center;
+      color: #fff;
+      letter-spacing: 0.3px;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+    .ofertas-section .scrolldown-sub {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 14px;
+      margin-bottom: 28px;
+    }
+
+    .ofertas-container {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: linear-gradient(180deg, var(--bg-card-side) 0%, var(--bg-card-side-grad) 100%);
+      border: 1px solid var(--border-soft);
+      border-radius: 14px;
+      padding: 22px 20px 24px;
+      position: relative;
+      text-align: center;
+      transition: transform .25s ease, border-color .25s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: var(--brand-purple);
+    }
+
+    .card__kicker {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--brand-purple-light);
+      margin-bottom: 14px;
+    }
+
+    .pote-mobile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .pote-mobile .h3 {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: 28px;
+      color: #fff;
+      line-height: 1.1;
+    }
+    .pote-mobile .h3--xl { font-size: 36px; }
+    .pote-mobile .sub {
+      font-size: 13px;
+      letter-spacing: 1.4px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      margin-top: 4px;
+      margin-bottom: 14px;
+    }
+    .pote-mobile .sub-main {
+      font-size: 14px;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      margin-top: 4px;
+      margin-bottom: 14px;
+      color: #fff;
+    }
+    .pote-mobile .pote {
+      max-width: 220px;
+      width: 100%;
+      margin: 6px auto 16px;
+      filter: drop-shadow(0 12px 24px rgba(123, 58, 168, 0.35));
+    }
+
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 8px;
+    }
+    .price-row .was {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 600;
+      font-size: 18px;
+      color: var(--text-muted);
+    }
+    .price-row .was s {
+      text-decoration-color: var(--accent-red);
+      text-decoration-thickness: 2px;
+    }
+    .price-row .now {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: 42px;
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+    .price-row .now--yellow { color: var(--price-now-light); }
+    .price-row .now--laranja { color: var(--best-orange-1); }
+
+    .ship {
+      font-size: 13px;
+      letter-spacing: 1px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .ship strong { color: #fff; }
+
+    .bullets {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-start;
+      max-width: 320px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .bullets li {
+      font-size: 14px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .bullets li i {
+      color: var(--check-purple);
+      font-size: 16px;
+    }
+    .bullets li i.check--white { color: #fff; }
+    .bullets li i.check--laranja { color: var(--best-orange-1); }
+    .bullets li.highlight-yellow { color: var(--price-now-light); font-weight: 600; }
+    .bullets li.highlight-orange { color: var(--best-orange-1); font-weight: 600; }
+
+    /* Botão buy */
+    .btn.buylink {
+      display: block;
+      width: 100%;
+      max-width: 340px;
+      margin: 6px auto 14px;
+      padding: 16px 18px;
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #fff;
+      background: linear-gradient(180deg, var(--brand-purple-light) 0%, var(--brand-purple) 60%, var(--brand-purple-deep) 100%);
+      border: 0;
+      border-radius: 10px;
+      box-shadow: 0 8px 22px rgba(123, 58, 168, 0.35), inset 0 1px 0 rgba(255,255,255,0.18);
+      cursor: pointer;
+      text-align: center;
+      transition: transform .12s ease, box-shadow .2s ease;
+      animation: pulseBtn 2.2s infinite ease-in-out;
+    }
+    .btn.buylink:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 28px rgba(123, 58, 168, 0.5), inset 0 1px 0 rgba(255,255,255,0.22);
+    }
+    .btn.buylink:active { transform: translateY(0); }
+
+    .btn.btn--laranja.buylink {
+      background: linear-gradient(180deg, #ffae5c 0%, var(--best-orange-1) 55%, var(--best-orange-deep) 100%);
+      box-shadow: 0 8px 22px rgba(230, 136, 43, 0.45), inset 0 1px 0 rgba(255,255,255,0.22);
+    }
+    .btn.btn--laranja.buylink:hover {
+      box-shadow: 0 10px 28px rgba(230, 136, 43, 0.6), inset 0 1px 0 rgba(255,255,255,0.28);
+    }
+
+    @keyframes pulseBtn {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.02); }
+    }
+
+    .cards-pay {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+      opacity: 0.85;
+    }
+    .cards-pay img {
+      max-width: 220px;
+      filter: grayscale(0.15) brightness(0.95);
+    }
+
+    .total {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-secondary);
+      letter-spacing: 0.5px;
+    }
+    .total strong { color: #fff; font-size: 16px; }
+    .total s { color: var(--text-disabled); text-decoration-color: var(--accent-red); }
+    .total small { font-size: 12px; letter-spacing: 1px; }
+    .total .texto-vermelho { color: var(--accent-red); font-weight: 700; }
+
+    /* === CARD CENTRAL (BEST VALUE) === */
+    .card.card--best {
+      background:
+        radial-gradient(ellipse at top, rgba(230, 136, 43, 0.18) 0%, transparent 60%),
+        linear-gradient(180deg, #1c1107 0%, #0e0805 100%);
+      border: 1.5px solid var(--best-orange-1);
+      box-shadow: 0 12px 36px rgba(230, 136, 43, 0.18);
+      padding-top: 38px;
+      order: -1; /* aparece primeiro no mobile-first */
+    }
+
+    .card__kickermain {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(180deg, var(--best-orange-1) 0%, var(--best-orange-deep) 100%);
+      color: #fff;
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 8px 18px;
+      border-radius: 100px;
+      box-shadow: 0 6px 14px rgba(230,136,43,0.45);
+      white-space: nowrap;
+    }
+
+    .card--best .card__inner { display: contents; }
+    .card--best .pote-mobile .pote {
+      filter: drop-shadow(0 16px 30px rgba(230, 136, 43, 0.45));
+      max-width: 260px;
+    }
+
+    .surprise-bounce {
+      animation: bounceText 1.6s infinite ease-in-out;
+    }
+    @keyframes bounceText {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-3px); }
+    }
+
+    .texto-garantia-central {
+      color: #fff;
+      letter-spacing: 1.4px;
+      margin-top: 4px;
+    }
+    .texto-surprise {
+      color: var(--best-orange-1);
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      margin-top: 2px;
+      margin-bottom: 12px;
+    }
+    .texto-footer-central {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 12px;
+      letter-spacing: 1.2px;
+      margin-top: 4px;
+      text-transform: uppercase;
+    }
+    .texto-footer-central strong { color: var(--best-orange-1); }
+
+    /* ══════════════════════════════════════════════════════════════════════════════
+       🛡️ GARANTIA
+       ══════════════════════════════════════════════════════════════════════════════ */
+    .guarantee-section {
+      padding: 40px 22px;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-soft);
+      border-bottom: 1px solid var(--border-soft);
+      margin-top: 28px;
+    }
+    .guarantee-title {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      line-height: 1.25;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 22px;
+    }
+    .guarantee-title .red-highlight {
+      color: var(--accent-red);
+      display: block;
+      margin-top: 6px;
+    }
+    .guarantee-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+    }
+    .guarantee-badge {
+      width: 160px;
+      filter: drop-shadow(0 8px 18px rgba(217, 0, 27, 0.35));
+    }
+    .guarantee-text p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 12px;
+      text-align: left;
+    }
+
+    /* ══════════════════════════════════════════════════════════════════════════════
+       💬 COMENTÁRIOS FB (tema escuro)
+       ══════════════════════════════════════════════════════════════════════════════ */
+    #fb-comments {
+      font-family: 'Segoe UI Historic', 'Segoe UI', Helvetica, Arial, sans-serif;
+      width: 100%;
+      max-width: 700px;
+      margin: 28px auto;
+      padding: 0 18px;
+    }
+    #fb-comments .fb-heading {
+      font-size: 18px;
+      color: var(--text-secondary);
+      font-weight: 400;
+      margin-bottom: 14px;
+      text-align: left;
+    }
+    #fb-comments .fb-heading b { color: #fff; font-weight: 700; }
+    #fb-comments .comments-container {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      border: 1px solid var(--border-soft);
+      border-radius: 14px;
+      padding: 18px 18px 6px;
+      background: var(--bg-surface);
+    }
+    #fb-comments .comment {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      position: relative;
+      width: 100%;
+    }
+    #fb-comments .comment.answer {
+      margin-left: 50px;
+      max-width: calc(100% - 50px);
+    }
+    #fb-comments .comment .user-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    #fb-comments .comment-data { width: 100%; }
+    #fb-comments .comment-data .user {
+      background: var(--bg-surface-2);
+      border-radius: 14px;
+      padding: 8px 14px 12px;
+    }
+    #fb-comments .comment-data .user .name {
+      margin: 0;
+      color: #b5cdf7;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    #fb-comments .comment-data .user .text {
+      margin: 2px 0 0;
+      font-size: 14px;
+      color: #e7e7e7;
+      text-align: left;
+      line-height: 1.45;
+    }
+    #fb-comments .comment-data .buttons {
+      margin: 4px 0 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    #fb-comments .comment-data .buttons like,
+    #fb-comments .comment-data .buttons answer,
+    #fb-comments .comment-data .buttons time,
+    #fb-comments .comment-data .buttons span {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    #fb-comments .comment-data .buttons like,
+    #fb-comments .comment-data .buttons answer { font-weight: 600; }
+    #fb-comments .comment likes {
+      position: absolute;
+      bottom: -6px;
+      right: 0;
+      background: var(--bg-surface-2);
+      border: 1px solid var(--border-strong);
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      border-radius: 100px;
+      padding: 2px 8px;
+    }
+    #fb-comments .comment likes::before {
+      content: '👍';
+      margin-right: 4px;
+      font-size: 12px;
+    }
+    #fb-comments .comments-closed {
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+      margin: 14px 0 12px;
+      color: var(--text-muted);
+    }
+
+    /* ══════════════════════════════════════════════════════════════════════════════
+       FOOTER
+       ══════════════════════════════════════════════════════════════════════════════ */
+    footer {
+      text-align: center;
+      padding: 28px 18px 40px;
+      border-top: 1px solid var(--border-soft);
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+    footer .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 22px;
+      margin-bottom: 12px;
+    }
+    footer .footer-links a {
+      color: var(--text-secondary);
+      font-size: 13px;
+      text-decoration: none;
+    }
+    footer .footer-links a:hover { color: #fff; }
+    footer h3 { font-size: 12px; font-weight: 400; color: var(--text-muted); }
+
+    /* ══════════════════════════════════════════════════════════════════════════════
+       📱 RESPONSIVO
+       ══════════════════════════════════════════════════════════════════════════════ */
+    @media (max-width: 600px) {
+      .news-header { padding: 14px 16px; }
+      .news-header .brand { font-size: 16px; }
+      .principal { padding: 22px 16px 30px; }
+      .ofertas-section { padding: 32px 12px 18px; }
+      .card { padding: 22px 16px 20px; }
+      .pote-mobile .h3 { font-size: 24px; }
+      .pote-mobile .h3--xl { font-size: 30px; }
+      .price-row .now { font-size: 36px; }
+      .guarantee-title { font-size: 19px; }
+      #fb-comments { padding: 0 12px; }
+      #fb-comments .comment.answer { margin-left: 32px; max-width: calc(100% - 32px); }
+    }
+
+    @media (min-width: 900px) {
+      /* Ofertas escapam da largura do container e centralizam na viewport */
+      .ofertas-section {
+        width: calc(100vw - 40px);
+        max-width: 1080px;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .ofertas-container {
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: center;
+        gap: 18px;
+        flex-wrap: nowrap;
+      }
+      .card {
+        max-width: 340px;
+        flex: 1 1 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .card .pote-mobile { flex: 1 0 auto; }
+      .card.card--best { order: 0; transform: scale(1.03); z-index: 2; }
+    }
+  </style>
+
+<link rel="preload" href="https://scripts.converteai.net/6781696c-3997-4626-89f3-618fd8020a85/players/6a4804b7ed015b5a971e2e85/v4/player.js" as="script">
+<link rel="preload" href="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/smartplayer.js" as="script">
+<link rel="preload" href="https://cdn.converteai.net/6781696c-3997-4626-89f3-618fd8020a85/6a4804b3215626372fae06dc/main.m3u8" as="fetch">
+<link rel="dns-prefetch" href="https://scripts.converteai.net"><link rel="dns-prefetch" href="https://cdn.converteai.net/"><link rel="dns-prefetch" href="https://images.converteai.net/"><link rel="dns-prefetch" href="https://license.vturb.com/"></head>
+
+<body cz-shortcut-listen="true">
+  <main id="container">
+
+    <!-- ════════════════════════════════════════════════════════════════════════════
+         HEADER - editorial dark (estilo CBS News)
+         ════════════════════════════════════════════════════════════════════════════ -->
+    <header class="news-header">
+      <div class="icon-btn" aria-hidden="true">
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+      <div class="brand">
+        <span class="brand-dot"></span>
+        HEALTH NEWS
+      </div>
+      <div class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></div>
+    </header>
+
+    <!-- ════════════════════════════════════════════════════════════════════════════
+         SEÇÃO PRINCIPAL - by Dr / vídeo VTURB / headline / LIVE
+         ════════════════════════════════════════════════════════════════════════════ -->
+    <section class="principal">
+
+      <div class="headline-block">
+        <!-- TEXTO: HEADLINE PRINCIPAL -->
+        <h1 id="vturb-headline-text">
+          Neurologists: The <strong>“Honey Shield”</strong> Brain Trick May Restore Memory After Age 60
+        </h1>
+
+        <div class="live-badge">LIVE</div>
+      </div>
+
+      <div class="video_vturb">
+        <!-- VTURB EMBED -->
+<vturb-smartplayer id="vid-6a4804b7ed015b5a971e2e85" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"><div class="vturb-player-placeholder" style="position: relative; width: 100%; padding: 178.21782178217822% 0 0; z-index: 0; background-color: black;"></div></vturb-smartplayer> <script type="text/javascript"> var s=document.createElement("script"); s.src="https://scripts.converteai.net/6781696c-3997-4626-89f3-618fd8020a85/players/6a4804b7ed015b5a971e2e85/v4/player.js", s.async=!0,document.head.appendChild(s); </script> <script>!function(i,n){i._plt=i._plt||(n&&n.timeOrigin?n.timeOrigin+n.now():Date.now())}(window,performance);</script>
+<!-- END VTURB EMBED -->
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════════════════════
+           SEÇÃO ESCONDIDA - aparece após delay do VTURB
+           ══════════════════════════════════════════════════════════════════════ -->
+      <div class="esconder">
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             SEÇÃO DE OFERTAS
+             ═══════════════════════════════════════════════════════════════════ -->
+        <section id="scrolldown" class="ofertas-section">
+
+          <h2 class="scrolldown-title">Choose Your NeuroMind Pro Package</h2>
+          <p class="scrolldown-sub">60 day money-back guarantee · Secure checkout</p>
+
+          <div class="ofertas-container">
+
+            <!-- ╔══════════════════════════════════════════════════════════════╗
+                 ║  OFERTA 1 - CARD ESQUERDO (2 BOTTLES)                        ║
+                 ╚══════════════════════════════════════════════════════════════╝ -->
+            <article class="card card--side card--left">
+
+              <!-- TEXTO: Nome do plano -->
+              <div class="card__kicker">Basic</div>
+
+              <div class="pote-mobile">
+                <!-- TEXTO: Quantidade -->
+                <div class="h3">2 BOTTLES</div>
+                <!-- TEXTO: Período -->
+                <div class="sub">60 DAY SUPPLY</div>
+                <!-- 🖼️ MOCKUP OFERTA 1: 2 potes -->
+                <img class="pote" src="./NeuroMind Pro_files/2.png" alt="NeuroMind Pro 2 bottles">
+
+                <div class="price-row">
+                  <!-- 💰 PREÇO ANTIGO OFERTA 1 -->
+                  <div class="was"><s>$186</s></div>
+                  <!-- 💰 PREÇO ATUAL OFERTA 1 -->
+                  <p class="now now--yellow">$158</p>
+                </div>
+
+                <!-- TEXTO: Frete -->
+                <div class="ship">+ <strong>$9.99</strong> SHIPPING</div>
+
+                <!-- TEXTO: Lista de benefícios -->
+                <ul class="bullets">
+                  <li class="highlight-yellow"><i class="fa-solid fa-circle-check"></i>YOU SAVE $28!</li>
+                  <li><i class="fa-solid fa-circle-check"></i>15% DISCOUNT</li>
+                  <li><i class="fa-solid fa-circle-check"></i>60 DAYS GUARANTEE</li>
+                </ul>
+              </div>
+
+              <!-- 🛒 CHECKOUT OFERTA 1 (2 UNITS) -->
+              <a class="btn buylink" href="checkout.html?pkg=2">
+                BUY NOW
+              </a>
+
+              <!-- 🖼️ Bandeiras de cartão -->
+              <div class="cards-pay">
+                <img src="./NeuroMind Pro_files/cards-2-1-1-1-1.webp" alt="Payment methods">
+              </div>
+
+              <!-- 💰 PREÇO TOTAL OFERTA 1 -->
+              <div class="total">Total: <s>$186</s> <strong>$158</strong><br><small>+ $9.99 SHIPPING</small></div>
+            </article>
+
+            <!-- ╔══════════════════════════════════════════════════════════════╗
+                 ║  OFERTA 2 - CARD CENTRAL (6 BOTTLES) - BEST VALUE - LARANJA  ║
+                 ╚══════════════════════════════════════════════════════════════╝ -->
+            <article class="card card--best">
+
+              <!-- TEXTO: Badge de destaque -->
+              <div class="card__kickermain">🧠 BEST VALUE!</div>
+
+              <div class="card__inner">
+                <div class="pote-mobile">
+                  <!-- TEXTO: Quantidade -->
+                  <div class="h3 h3--xl surprise-bounce">6 BOTTLES</div>
+                  <!-- TEXTO: Período -->
+                  <div class="sub-main">180 DAY SUPPLY</div>
+                  <!-- 🖼️ MOCKUP OFERTA 2: 6 potes -->
+                  <img class="pote" src="./NeuroMind Pro_files/6.png" alt="NeuroMind Pro 6 bottles">
+
+                  <div class="price-row">
+                    <!-- 💰 PREÇO ANTIGO OFERTA 2 -->
+                    <div class="was"><s>$588</s></div>
+                    <!-- 💰 PREÇO ATUAL OFERTA 2 -->
+                    <p class="now now--laranja">$294</p>
+                  </div>
+
+                  <!-- TEXTO: Frete -->
+                  <div class="ship"><strong>FREE SHIPPING</strong></div>
+
+                  <!-- TEXTO: Lista de benefícios -->
+                  <ul class="bullets">
+                    <li class="highlight-orange"><i class="fa-solid fa-circle-check check--laranja"></i>YOU SAVE $294</li>
+                    <li><i class="fa-solid fa-circle-check check--white"></i>50% DISCOUNT</li>
+                    <li><i class="fa-solid fa-circle-check check--white"></i>3 FREE BOTTLES</li>
+                  </ul>
+
+                  <!-- TEXTO: Garantia -->
+                  <div class="sub texto-garantia-central">60 DAY GUARANTEE</div>
+                  <!-- TEXTO: Surprise -->
+                  <div class="sub surprise-bounce texto-surprise">+SURPRISE 🎁</div>
+                </div>
+
+                <!-- 🛒 CHECKOUT OFERTA 2 (6 UNITS) -->
+                <a class="btn btn--laranja buylink" href="checkout.html?pkg=6">
+                  BUY NOW
+                </a>
+
+                <!-- 🖼️ Bandeiras de cartão -->
+                <div class="cards-pay">
+                  <img src="./NeuroMind Pro_files/cards-2-1-1-1-1.webp" alt="Payment methods">
+                </div>
+
+                <!-- TEXTO: Footer do card -->
+                <div class="texto-footer-central">
+                  60 DAYS GUARANTEE <br><strong>+FREE SHIPPING</strong>
+                </div>
+              </div>
+            </article>
+
+            <!-- ╔══════════════════════════════════════════════════════════════╗
+                 ║  OFERTA 3 - CARD DIREITO (3 BOTTLES)                         ║
+                 ╚══════════════════════════════════════════════════════════════╝ -->
+            <article class="card card--side card--right">
+
+              <!-- TEXTO: Nome do plano -->
+              <div class="card__kicker">Good Value</div>
+
+              <div class="pote-mobile">
+                <!-- TEXTO: Quantidade -->
+                <div class="h3">3 BOTTLES</div>
+                <!-- TEXTO: Período -->
+                <div class="sub">90 DAY SUPPLY</div>
+                <!-- 🖼️ MOCKUP OFERTA 3: 3 potes -->
+                <img class="pote" src="./NeuroMind Pro_files/3.png" alt="NeuroMind Pro 3 bottles">
+
+                <div class="price-row">
+                  <!-- 💰 PREÇO ANTIGO OFERTA 3 -->
+                  <div class="was"><s>$294</s></div>
+                  <!-- 💰 PREÇO ATUAL OFERTA 3 -->
+                  <p class="now now--yellow">$207</p>
+                </div>
+
+                <!-- TEXTO: Frete -->
+                <div class="ship"><strong>FREE SHIPPING</strong></div>
+
+                <!-- TEXTO: Lista de benefícios -->
+                <ul class="bullets">
+                  <li class="highlight-yellow"><i class="fa-solid fa-circle-check"></i>YOU SAVE $87!</li>
+                  <li><i class="fa-solid fa-circle-check"></i>1 FREE BOTTLE</li>
+                  <li><i class="fa-solid fa-circle-check"></i>30% DISCOUNT</li>
+                  <li><i class="fa-solid fa-circle-check"></i>60 DAYS GUARANTEE</li>
+                </ul>
+              </div>
+
+              <!-- 🛒 CHECKOUT OFERTA 3 (3 UNITS) -->
+              <a class="btn buylink" href="checkout.html?pkg=3">
+                BUY NOW
+              </a>
+
+              <!-- 🖼️ Bandeiras de cartão -->
+              <div class="cards-pay">
+                <img src="./NeuroMind Pro_files/cards-2-1-1-1-1.webp" alt="Payment methods">
+              </div>
+
+              <!-- 💰 PREÇO TOTAL OFERTA 3 -->
+              <div class="total">Total: <s>$294</s> <strong>$207</strong><br><small><span class="texto-vermelho">+FREE</span> SHIPPING</small></div>
+            </article>
+
+          </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════════
+             SEÇÃO DE GARANTIA
+             ════════════════════════════════════════════════════════════════════ -->
+        <section class="guarantee-section">
+          <div class="guarantee-container">
+
+            <!-- TEXTO: Título da garantia -->
+            <h2 class="guarantee-title">
+              100% Satisfaction or Your Money Back
+              <span class="red-highlight">60-Day Unconditional Guarantee</span>
+            </h2>
+
+            <div class="guarantee-content">
+              <!-- 🖼️ Badge de garantia -->
+              <div class="guarantee-badge">
+                <img src="./NeuroMind Pro_files/guarantee-badge-2-1-1.webp" alt="Guarantee Badge">
+              </div>
+
+              <!-- TEXTO: Descrição da garantia -->
+              <div class="guarantee-text">
+                <p>We're so certain that NeuroMind Pro will give you remarkable results that we're willing to shoulder all the risk for a full 60 days. From the moment your order arrives, start taking NeuroMind Pro daily and pay close attention to how you feel. Within just a few days, you may notice sharper recall, improved focus, and clearer thinking. Continue for a few weeks or months, and you will experience real changes in your memory function, mental clarity, and overall cognitive performance.</p>
+                <p>If at any point during these 60 days you don't feel NeuroMind Pro is delivering on the promise we've made, just let us know. Our team will refund every penny — no questions asked and no need to return anything.</p>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════════════════════
+             COMENTÁRIOS FB
+             ════════════════════════════════════════════════════════════════════ -->
+        <div id="fb-comments" class="mg-auto">
+          <h2 class="fb-heading"><b>1,369 Comments</b></h2>
+          <div class="comments-container">
+
+            <div class="comment" data-comment-id="1">
+              <img decoding="async" class="user-avatar" src="./NeuroMind Pro_files/1.png" alt="">
+              <div class="comment-data">
+                <div class="user">
+                  <p class="name">Samantha Anderson</p>
+                  <p class="text">Dr., it's been 15 consecutive days since I started, and I've already noticed a big improvement in my mental clarity and focus. I'll keep going because I'm feeling amazing! 😍</p>
+                </div>
+                <div class="buttons">
+                  <like>Like</like><span>·</span><answer>Reply</answer><span>·</span><time>2h</time>
+                </div>
+              </div>
+              <likes>23</likes>
+            </div>
+
+            <div class="comment answer" data-comment-id="6b">
+              <img decoding="async" class="user-avatar" src="./NeuroMind Pro_files/55.png" alt="">
+              <div class="comment-data">
+                <div class="user">
+                  <p class="name">Jennifer Davis</p>
+                  <p class="text">FINALLY, SOMEONE WHO DOESN'T BEAT AROUND THE BUSH TO ASK FOR MONEY IN THE END, THANK YOUUUU! I STARTED TODAY ❤</p>
+                </div>
+                <div class="buttons">
+                  <like>Like</like><span>·</span><answer>Reply</answer><span>·</span><time>35 min</time>
+                </div>
+              </div>
+              <likes>17</likes>
+            </div>
+
+            <div class="comment answer" data-comment-id="6c">
+              <img decoding="async" class="user-avatar" src="./NeuroMind Pro_files/1.webp" alt="">
+              <div class="comment-data">
+                <div class="user">
+                  <p class="name">Tommy Thompson</p>
+                  <p class="text">You explain very well, it's what we, the laypeople, need. I'm going to start using this trick today itself.</p>
+                </div>
+                <div class="buttons">
+                  <like>Like</like><span>·</span><answer>Reply</answer><span>·</span><time>7 min</time>
+                </div>
+              </div>
+              <likes>11</likes>
+            </div>
+
+            <div class="comment" data-comment-id="3">
+              <img decoding="async" class="user-avatar" src="./NeuroMind Pro_files/2-1.webp" alt="">
+              <div class="comment-data">
+                <div class="user">
+                  <p class="name">Cora Martinez</p>
+                  <p class="text">I've been applying these tips for 17 days now, and I've already noticed a significant improvement in my memory. I was even surprised by the results; it's impressive how some simple adjustments can make a difference! Loved it ❤️❤️❤️</p>
+                </div>
+                <div class="buttons">
+                  <like>Like</like><span>·</span><answer>Reply</answer><span>·</span><time>1h</time>
+                </div>
+              </div>
+              <likes>34</likes>
+            </div>
+
+            <div class="comment" data-comment-id="4">
+              <img decoding="async" class="user-avatar" src="./NeuroMind Pro_files/44.png" alt="">
+              <div class="comment-data">
+                <div class="user">
+                  <p class="name">Emily Johnson</p>
+                  <p class="text">Very well explained and straightforward video, no beating around the bush, congratulations Dr. 😍</p>
+                </div>
+                <div class="buttons">
+                  <like>Like</like><span>·</span><answer>Reply</answer><span>·</span><time>1h</time>
+                </div>
+              </div>
+              <likes>54</likes>
+            </div>
+
+            <div class="comment" data-comment-id="5">
+              <img decoding="async" class="user-avatar" src="./NeuroMind Pro_files/2(1).png" alt="">
+              <div class="comment-data">
+                <div class="user">
+                  <p class="name">Lauren Brown</p>
+                  <p class="text">Dr., you've helped me a lot. A few years ago, I went through a difficult period and started looking for ways to improve my mind and well-being. I started applying your techniques 5 days ago, and I already feel like a different person – more energized, with greater mental clarity, and more desire to face the day. What a blessing!</p>
+                </div>
+                <div class="buttons">
+                  <like>Like</like><span>·</span><answer>Reply</answer><span>·</span><time>19 min</time>
+                </div>
+              </div>
+              <likes>10</likes>
+            </div>
+
+            <h4 class="comments-closed">This post is no longer receiving comments!</h4>
+          </div>
+        </div>
+
+      </div>
+      <!-- FIM .esconder -->
+
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════════════════
+         FOOTER
+         ════════════════════════════════════════════════════════════════════════════ -->
+    <footer>
+      <div class="footer-links">
+        <a href="#" class="privacidade">Privacy Policy</a>
+        <a href="#" class="termos">Terms of Use</a>
+      </div>
+      <h3>2026. All rights reserved.</h3>
+    </footer>
+
+  </main>
+
+  <!-- ════════════════════════════════════════════════════════════════════════════
+       SCRIPT: delay para mostrar oferta após VTURB + scroll suave
+       Substitua 800 pelo delay desejado (em segundos)
+       ════════════════════════════════════════════════════════════════════════════ -->
+  <script>
+    $(document).ready(function () {
+      var delaySeconds = 300;
+      var player = document.querySelector("vturb-smartplayer");
+
+      if (!player) return;
+
+      player.addEventListener("player:ready", function () {
+        player.displayHiddenElements(delaySeconds, [".esconder"], { persist: true });
+
+        var initialized = false;
+
+        var checkInterval = setInterval(function () {
+          var $target = $(".esconder:visible").first();
+
+          if ($target.length && !initialized) {
+            initialized = true;
+            clearInterval(checkInterval);
+
+            var $scrollTarget = $("#scrolldown");
+            if ($scrollTarget.length) {
+              $('html, body').animate({
+                scrollTop: $scrollTarget.offset().top
+              }, 800);
+            }
+
+            $target.find(".countdown").each(function () {
+              var $countdownEl = $(this);
+              var desiredValue = parseInt($countdownEl.text().trim().match(/\d+/)[0], 10);
+
+              var decrementTimer = setInterval(function () {
+                if (desiredValue > 48) {
+                  desiredValue = Math.max(desiredValue - 6, 48);
+                  $countdownEl.text(desiredValue);
+                } else {
+                  clearInterval(decrementTimer);
+                }
+              }, 8000);
+            });
+          }
+        }, 500);
+      });
+    });
+  </script>
+
+  
+
+  <!-- ════════════════════════════════════════════════════════════════════════════
+       🛒 SCRIPT DE TRACKING DO CHECKOUT
+       (Script da BuyGoods removido — cole aqui o tracking do novo checkout do
+        NeuroMind Pro, se houver)
+       ════════════════════════════════════════════════════════════════════════════ -->
+
+
+
+
+
+</body></html>

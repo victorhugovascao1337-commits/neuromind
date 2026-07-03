@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Order Confirmed — Thank You</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <style>
+    body{background:#f6f8fb;color:#212529}
+    .top-banner img{width:100%;max-width:1140px;display:block;margin:0 auto;height:auto}
+    .navbar-cs{border-bottom:1px solid #eee}
+    .store-name{font-size:20px;font-weight:800;color:#0d6efd}
+    .thank-card{max-width:640px;margin:32px auto;background:#fff;border:1px solid #e5e7eb;border-radius:14px;
+      box-shadow:0 10px 30px rgba(0,0,0,.05);overflow:hidden}
+    .thank-head{background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;text-align:center;padding:36px 20px 30px}
+    .check-circle{width:78px;height:78px;border-radius:50%;background:rgba(255,255,255,.18);
+      display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:38px;
+      animation:pop .4s ease}
+    @keyframes pop{0%{transform:scale(.4);opacity:0}100%{transform:scale(1);opacity:1}}
+    .thank-head h1{font-size:26px;font-weight:800;margin:0}
+    .thank-head p{margin:6px 0 0;opacity:.95}
+    .thank-body{padding:28px 26px}
+    .order-row{display:flex;justify-content:space-between;padding:11px 0;border-top:1px solid #eee;font-size:15px}
+    .order-row:first-child{border-top:none}
+    .order-row .lbl{color:#6c757d}
+    .order-row .val{font-weight:600}
+    .prod{display:flex;align-items:center;gap:14px;background:#f8f9fa;border-radius:10px;padding:14px;margin-bottom:18px}
+    .prod img{width:70px;height:70px;object-fit:contain}
+    .steps{background:#eff6ff;border:1px solid #dbeafe;border-radius:10px;padding:16px 18px;margin-top:18px;font-size:14px}
+    .steps h6{font-weight:700;margin-bottom:8px}
+    .steps li{margin-bottom:5px}
+    .badge-guar{display:flex;align-items:center;gap:12px;justify-content:center;margin-top:22px;color:#475569;font-size:13px}
+    .badge-guar img{width:64px;height:auto}
+    footer{border-top:1px solid #eee;background:#fff}
+  </style>
+</head>
+<body>
+
+  <!-- ===== BANNER TOPO ===== -->
+  <div class="top-banner">
+    <img src="./NeuroMind Pro_files/banner.jpg" alt="NeuroMind Pro">
+  </div>
+
+  <!-- ===== NAV ===== -->
+  <nav class="navbar navbar-cs shadow-sm p-0 bg-white">
+    <div class="container d-flex justify-content-between align-items-center py-2">
+      <span class="store-name">SUA LOJA</span>
+      <div class="small text-muted">Having trouble? <a href="#" class="text-decoration-none">Contact us</a></div>
+    </div>
+  </nav>
+
+  <div class="thank-card">
+    <div class="thank-head">
+      <div class="check-circle"><i class="fas fa-check"></i></div>
+      <h1>Thank you<span id="buyer-name"></span>!</h1>
+      <p>Your order has been confirmed and is being prepared.</p>
+    </div>
+
+    <div class="thank-body">
+      <!-- Produto -->
+      <div class="prod">
+        <img id="prod-img" src="./NeuroMind Pro_files/3.png" alt="NeuroMind Pro">
+        <div>
+          <div class="fw-bold" id="prod-name">NeuroMind Pro — 3 Bottles</div>
+          <div class="text-muted small">Order confirmation sent to your email</div>
+        </div>
+      </div>
+
+      <!-- Detalhes -->
+      <div class="order-row"><span class="lbl">Order number</span><span class="val" id="order-id">—</span></div>
+      <div class="order-row"><span class="lbl">Email</span><span class="val" id="order-email">—</span></div>
+      <div class="order-row"><span class="lbl">Amount paid</span><span class="val" id="order-total">—</span></div>
+      <div class="order-row"><span class="lbl">Payment method</span><span class="val">PayPal</span></div>
+
+      <!-- Próximos passos -->
+      <div class="steps">
+        <h6><i class="fas fa-truck-fast me-1"></i> What happens next</h6>
+        <ul class="mb-0 ps-3">
+          <li>You'll receive an order confirmation by email shortly.</li>
+          <li>Your package will be prepared and shipped to your address.</li>
+          <li>A tracking link will be sent as soon as it ships.</li>
+        </ul>
+      </div>
+
+      <!-- Garantia -->
+      <div class="badge-guar">
+        <img src="./NeuroMind Pro_files/badge-60-day.webp" alt="60 Day Guarantee">
+        <span>You're protected by our <strong>60-day</strong> no-questions-asked money back guarantee.</span>
+      </div>
+
+      <div class="text-center mt-4">
+        <a href="#" class="btn btn-primary btn-lg px-4">Back to Home</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="py-4 mt-2">
+    <div class="container text-center small text-muted">
+      <p class="mb-0">Copyright 2024 &copy; minha loja Inc — Secure order processed by PayPal.</p>
+    </div>
+  </footer>
+
+  <script>
+    // lê os dados do pedido passados pela URL
+    var q = new URLSearchParams(location.search);
+    var name = q.get('name');
+    var IMGS = { "2":"./NeuroMind Pro_files/2.png", "3":"./NeuroMind Pro_files/3.png", "6":"./NeuroMind Pro_files/6.png" };
+    var NAMES = { "2":"NeuroMind Pro — 2 Bottles", "3":"NeuroMind Pro — 3 Bottles", "6":"NeuroMind Pro — 6 Bottles" };
+    var pkg = q.get('pkg') || "3";
+
+    if (name) document.getElementById('buyer-name').textContent = ", " + name;
+    document.getElementById('prod-img').src = IMGS[pkg] || IMGS["3"];
+    document.getElementById('prod-name').textContent = NAMES[pkg] || NAMES["3"];
+    document.getElementById('order-id').textContent = q.get('order') || "—";
+    document.getElementById('order-email').textContent = q.get('email') || "—";
+    document.getElementById('order-total').textContent = q.get('total') ? ("$" + q.get('total')) : "—";
+  </script>
+</body>
+</html>
