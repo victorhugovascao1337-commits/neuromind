@@ -9,7 +9,7 @@ Coloque a pasta `neuromind` inteira num repositório no GitHub
 Estrutura esperada:
 ```
 neuromind/
-├── NeuroMind Pro.html      (página VSL)
+├── index.html              (página VSL — abre no domínio raiz)
 ├── checkout.html
 ├── obrigado.html
 ├── NeuroMind Pro_files/    (imagens, css, etc.)
