@@ -342,6 +342,19 @@
       setTimeout(tick, 2000);
     })();
 
+    // mostra o erro real do PayPal (para diagnóstico)
+    function mostrarErroPay(prefixo, err){
+      var msg = '';
+      try {
+        if (typeof err === 'string') msg = err;
+        else if (err && err.message) msg = err.message;
+        else msg = JSON.stringify(err);
+        if (err && err.details) msg += '\n' + JSON.stringify(err.details);
+      } catch(e){ msg = String(err); }
+      console.error(prefixo, err);
+      alert(prefixo + ':\n' + msg);
+    }
+
     // vai para a página de obrigado com os dados do pedido
     function irParaObrigado(nome, email, orderId){
       var q = new URLSearchParams({
@@ -388,11 +401,19 @@
               method:'POST', headers:{'Content-Type':'application/json'},
               body: JSON.stringify({ orderID: data.orderID })
             }).then(function(r){return r.json()}).then(function(det){
-              var nome = document.getElementById('creditcards_name') ? document.getElementById('creditcards_name').value : '';
-              irParaObrigado(nome, null, data.orderID);
+              console.log('capture result:', det);
+              var status = det && det.status;
+              var cap = det && det.purchase_units && det.purchase_units[0] && det.purchase_units[0].payments
+                        && det.purchase_units[0].payments.captures && det.purchase_units[0].payments.captures[0];
+              if (status === 'COMPLETED' || (cap && cap.status === 'COMPLETED')) {
+                var nome = document.getElementById('creditcards_name') ? document.getElementById('creditcards_name').value : '';
+                irParaObrigado(nome, null, data.orderID);
+              } else {
+                mostrarErroPay('Pagamento não concluído', det);
+              }
             });
           },
-          onError: function(err){ console.error(err); alert('Não foi possível processar o cartão. Confira os dados e tente novamente.'); }
+          onError: function(err){ mostrarErroPay('Erro no cartão', err); }
         });
 
         if (cardField.isEligible()) {
@@ -404,7 +425,7 @@
           document.getElementById('submit').addEventListener('click', function(){
             var form = document.getElementById('checkout');
             if(!form.checkValidity()){ form.reportValidity(); return; }
-            cardField.submit().catch(function(e){ console.error(e); });
+            cardField.submit().catch(function(e){ mostrarErroPay('Falha ao enviar cartão', e); });
           });
         } else {
           // conta não elegível: esconde a aba de cartão
