@@ -233,6 +233,8 @@
             <!-- Botões de pagamento -->
             <button id="submit" class="btn btn-primary btn-lg w-100" type="button"><strong>Buy Now »</strong></button>
             <div id="paypal-button-container" class="mt-2 d-none"></div>
+            <div id="googlepay-button-container" class="mt-2 d-none"></div>
+            <div id="applepay-button-container" class="mt-2 d-none"></div>
 
             <div id="paypal-warn" class="paypal-warn mt-2 d-none">
               Conecte seu PayPal (Client ID) para ativar os campos de cartão e o pagamento com segurança.
@@ -279,8 +281,11 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- PayPal: troque SEU_CLIENT_ID_PAYPAL e ajuste PRECO -->
-  <script src="https://www.paypal.com/sdk/js?client-id=AWtwin89u0TAKdUQnhuNaNVSDYzqceJdkfAGZkIKaRGeauKldN2MP3MWN6QW0n5ir0OHIkyElnVDyOeV&currency=USD&components=buttons,card-fields"></script>
+  <!-- PayPal SDK (troque o client-id pelo Live quando for pra produção) -->
+  <script src="https://www.paypal.com/sdk/js?client-id=AWtwin89u0TAKdUQnhuNaNVSDYzqceJdkfAGZkIKaRGeauKldN2MP3MWN6QW0n5ir0OHIkyElnVDyOeV&currency=USD&components=buttons,card-fields,googlepay,applepay"></script>
+  <!-- Bibliotecas Google Pay e Apple Pay -->
+  <script async src="https://pay.google.com/gp/p/js/pay.js"></script>
+  <script async src="https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js"></script>
   <script>
     // ===== Pacotes (vindos da página VSL via ?pkg=) =====
     var PACOTES = {
@@ -303,16 +308,25 @@
     document.getElementById('total-price').textContent = money(TOTAL);
 
     // troca de aba de pagamento
+    function mostrarMetodo(m){
+      document.getElementById('card-section').style.display = (m==='card') ? 'block':'none';
+      document.getElementById('submit').classList.toggle('d-none', m!=='card');
+      document.getElementById('paypal-button-container').classList.toggle('d-none', m!=='paypal');
+      document.getElementById('googlepay-button-container').classList.toggle('d-none', m!=='googlepay');
+      document.getElementById('applepay-button-container').classList.toggle('d-none', m!=='applepay');
+    }
     document.querySelectorAll('.payment-btn').forEach(function(btn){
       btn.addEventListener('click', function(){
         document.querySelectorAll('.payment-btn').forEach(function(b){b.classList.remove('selected')});
         this.classList.add('selected');
-        var m = this.dataset.method;
-        document.getElementById('card-section').style.display = (m==='card') ? 'block':'none';
-        document.getElementById('submit').classList.toggle('d-none', m!=='card');
-        document.getElementById('paypal-button-container').classList.toggle('d-none', m==='card');
+        mostrarMetodo(this.dataset.method);
       });
     });
+    // esconde uma aba inteira quando o método não é elegível
+    function esconderAba(metodo){
+      var btn = document.querySelector('.payment-btn[data-method="'+metodo+'"]');
+      if(btn && btn.parentElement) btn.parentElement.style.display='none';
+    }
 
     // shipping toggle
     document.getElementById('same-shipping').addEventListener('change', function(){
@@ -433,6 +447,84 @@
           document.getElementById('submit').classList.add('d-none');
         }
       }
+
+      // ======= GOOGLE PAY =======
+      var GPAY_ENV = 'TEST'; // 'TEST' no sandbox — troque para 'PRODUCTION' no Live
+      async function pagarGooglePay(gp, cfg, client){
+        try {
+          var paymentData = await client.loadPaymentData({
+            apiVersion: cfg.apiVersion, apiVersionMinor: cfg.apiVersionMinor,
+            allowedPaymentMethods: cfg.allowedPaymentMethods,
+            merchantInfo: cfg.merchantInfo,
+            transactionInfo: { countryCode: cfg.countryCode || 'US', currencyCode: 'USD', totalPriceStatus: 'FINAL', totalPrice: TOTAL }
+          });
+          var order = await fetch('/api/create-order', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pkg:pkgKey||'3'})}).then(function(r){return r.json()});
+          if(!order.id) throw new Error(order.error||'create-order falhou');
+          var conf = await gp.confirmOrder({ orderId: order.id, paymentMethodData: paymentData.paymentMethodData });
+          if (conf.status === 'APPROVED' || conf.status === 'PAYER_ACTION_REQUIRED') {
+            await fetch('/api/capture-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({orderID:order.id})}).then(function(r){return r.json()});
+            irParaObrigado('', null, order.id);
+          } else { mostrarErroPay('Google Pay', conf); }
+        } catch(e){ if(e && e.statusCode==='CANCELED') return; mostrarErroPay('Google Pay', e); }
+      }
+      (async function initGooglePay(){
+        try {
+          if (!paypal.Googlepay) { esconderAba('googlepay'); return; }
+          var t=0; while (typeof google==='undefined' || !google.payments){ if(t++>40){esconderAba('googlepay');return;} await new Promise(function(r){setTimeout(r,150)}); }
+          var gp = paypal.Googlepay();
+          var cfg = await gp.config();
+          if (!cfg || !cfg.isEligible) { esconderAba('googlepay'); return; }
+          var client = new google.payments.api.PaymentsClient({ environment: GPAY_ENV });
+          var ready = await client.isReadyToPay({ apiVersion: cfg.apiVersion, apiVersionMinor: cfg.apiVersionMinor, allowedPaymentMethods: cfg.allowedPaymentMethods });
+          if (!ready.result) { esconderAba('googlepay'); return; }
+          var botao = client.createButton({ buttonType:'buy', buttonSizeMode:'fill', onClick:function(){ pagarGooglePay(gp, cfg, client); } });
+          document.getElementById('googlepay-button-container').appendChild(botao);
+        } catch(e){ console.warn('Google Pay indisponível:', e); esconderAba('googlepay'); }
+      })();
+
+      // ======= APPLE PAY =======
+      async function pagarApplePay(ap, cfg){
+        try {
+          var pr = {
+            countryCode: cfg.countryCode, currencyCode: cfg.currencyCode || 'USD',
+            merchantCapabilities: cfg.merchantCapabilities || ['supports3DS'],
+            supportedNetworks: cfg.supportedNetworks,
+            requiredBillingContactFields: ['name','postalAddress'],
+            total: { label: pkg.nome, amount: TOTAL, type: 'final' }
+          };
+          var session = new ApplePaySession(4, pr);
+          session.onvalidatemerchant = function(ev){
+            ap.validateMerchant({ validationUrl: ev.validationURL, displayName: 'my loja' })
+              .then(function(p){ session.completeMerchantValidation(p.merchantSession); })
+              .catch(function(err){ console.error(err); session.abort(); mostrarErroPay('Apple Pay (verificação de domínio)', err); });
+          };
+          session.onpaymentauthorized = async function(ev){
+            try {
+              var order = await fetch('/api/create-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pkg:pkgKey||'3'})}).then(function(r){return r.json()});
+              if(!order.id) throw new Error(order.error||'create-order falhou');
+              await ap.confirmOrder({ orderId: order.id, token: ev.payment.token, billingContact: ev.payment.billingContact });
+              await fetch('/api/capture-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({orderID:order.id})}).then(function(r){return r.json()});
+              session.completePayment(ApplePaySession.STATUS_SUCCESS);
+              irParaObrigado('', null, order.id);
+            } catch(err){ session.completePayment(ApplePaySession.STATUS_FAILURE); mostrarErroPay('Apple Pay', err); }
+          };
+          session.begin();
+        } catch(e){ mostrarErroPay('Apple Pay', e); }
+      }
+      (async function initApplePay(){
+        try {
+          if (!paypal.Applepay) { esconderAba('applepay'); return; }
+          if (typeof window.ApplePaySession==='undefined' || !ApplePaySession.canMakePayments()) { esconderAba('applepay'); return; }
+          var ap = paypal.Applepay();
+          var cfg = await ap.config();
+          if (!cfg || !cfg.isEligible) { esconderAba('applepay'); return; }
+          var botao = document.createElement('apple-pay-button');
+          botao.setAttribute('buttonstyle','black'); botao.setAttribute('type','buy'); botao.setAttribute('locale','pt-BR');
+          botao.style.cssText='display:block;--apple-pay-button-width:100%;--apple-pay-button-height:48px;height:48px;cursor:pointer;';
+          botao.addEventListener('click', function(){ pagarApplePay(ap, cfg); });
+          document.getElementById('applepay-button-container').appendChild(botao);
+        } catch(e){ console.warn('Apple Pay indisponível:', e); esconderAba('applepay'); }
+      })();
 
     } else {
       document.getElementById('paypal-warn').classList.remove('d-none');

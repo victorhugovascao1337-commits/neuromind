@@ -54,6 +54,27 @@ Quando estiver tudo certo no teste:
   os dados do cartão nunca passam pelo seu servidor.
 - O backend (`api/`) só cria e captura o pedido, usando o Secret guardado na Vercel.
 
-## Apple Pay e Google Pay (opcional, depois)
-Exigem verificação do seu domínio junto ao PayPal e só funcionam no site publicado
-(HTTPS). Dá pra ativar depois que o site estiver no ar na Vercel.
+## Apple Pay e Google Pay
+
+Os dois já estão programados no checkout. Eles aparecem sozinhos **se** a sua conta
+PayPal for elegível e o ambiente permitir. Se não forem elegíveis, a aba some sozinha
+(o cliente não vê um botão quebrado).
+
+### Google Pay
+- Funciona no **Chrome/Android**, só no site publicado (HTTPS).
+- No arquivo `checkout.html`, a variável `GPAY_ENV` está como `'TEST'` (sandbox).
+  Troque para `'PRODUCTION'` quando for para o Live.
+- Nada mais a fazer: se a conta suportar, o botão aparece na aba "Google Pay".
+
+### Apple Pay (passos extras obrigatórios)
+Só funciona no **Safari (iPhone/Mac)** e exige verificar seu domínio no PayPal:
+1. No painel do PayPal (Live), vá em **Pagamentos → Apple Pay** e **registre seu domínio**
+   (ex: `seu-projeto.vercel.app`).
+2. O PayPal vai te dar um arquivo de verificação. Coloque-o em:
+   `.well-known/apple-developer-merchantid-domain-association` (na raiz do projeto).
+   Na Vercel, crie a pasta `.well-known/` com esse arquivo e faça deploy.
+3. Teste abrindo o checkout **no Safari de um iPhone/Mac**.
+
+> Sem os passos 1 e 2, o Apple Pay não valida e a aba fica oculta.
+> Observação: Apple Pay/Google Pay via PayPal podem não estar disponíveis para
+> contas de alguns países — se a aba não aparecer, é limitação da conta.
